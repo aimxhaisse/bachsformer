@@ -13,7 +13,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader,Dataset
 
 class LudovicoVAE():
-    def __init__(self,config_name=None,device="mps"):
+    def __init__(self,config_name=None,device="cpu"):
         assert config_name, "Please provide a config name" 
         self.config_name = config_name
         self.work_dir=os.path.join("vq_vae",config_name)
@@ -52,7 +52,7 @@ class LudovicoVAE():
                       config["embedding_dim"],
                       config["commitment_cost"],
                       config["decay"]).to(self.device)
-        model.load_state_dict(torch.load(os.path.join(self.work_dir,f"state_dict/{state_dict_name}")))
+        model.load_state_dict(torch.load(os.path.join(self.work_dir,f"state_dict/{state_dict_name}"), map_location="cpu"))
         return model
     
     def codebooks2vocab(self,model,seq_len=192,tune_name=""):
@@ -95,7 +95,7 @@ class MidiDataset(Dataset):
         return self.data[idx]
 
 class TrainerVQVAE():
-    def __init__(self,model,config_name=None,batch_size=512,device="mps"):
+    def __init__(self,model,config_name=None,batch_size=512,device="cpu"):
         assert config_name, "Please provide a config name" 
         self.config_name = config_name
         self.model = model

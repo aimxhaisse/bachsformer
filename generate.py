@@ -39,10 +39,7 @@ if __name__=="__main__":
     config_name = "ludovico-mini"
     ludovico_vae = LudovicoVAE(config_name,device=device)
     # get model
-    try:
-        model = ludovico_vae.get_model()
-    except:
-        print(f"No model found with this configuration: {config_name}")
+    model = ludovico_vae.get_model()
 
     # create a GPT instance
     gpt_model_config = GPT.get_default_config()

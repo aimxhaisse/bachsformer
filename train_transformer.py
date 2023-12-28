@@ -47,7 +47,7 @@ def batch_end_callback(trainer):
 
 if __name__=="__main__":
     dtype = torch.float
-    device = torch.device("mps")
+    device = torch.device("cpu")
     config_name = "ludovico-mini"
     ludovico_vae = LudovicoVAE(config_name)
     # get model
